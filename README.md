@@ -17,12 +17,12 @@ A mobile app for booking vehicles with React Native.
 ## Setup
 1. Clone repo  
    ```bash
-   git clone https://github.com/yourusername/vehicle-booking-app.git
+   git clone https://github.com/NE-Resources-2025/VRS
    ```
 
 2. Install dependencies
    ```bash
-      cd vehicle-booking-app && npm install
+      cd VRS && npm install
    ```
 
 3. Run
