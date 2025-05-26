@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
 import { COLORS, FONTS, SIZES, SHADOWS } from '../constants/theme';
 import { useAuth } from '../context/AuthContext';
-import { User, Mail, Lock, UserPlus } from 'lucide-react-native';
+import { User, Mail, Lock, UserPlus, Eye, EyeOff } from 'lucide-react-native';
 
 const RegisterScreen = ({ navigation }) => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,8 @@ const RegisterScreen = ({ navigation }) => {
     confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register, isLoading } = useAuth();
 
   const validateForm = () => {
@@ -126,8 +128,18 @@ const RegisterScreen = ({ navigation }) => {
                 placeholder="At least 6 characters"
                 value={formData.password}
                 onChangeText={(value) => handleInputChange('password', value)}
-                secureTextEntry
+                secureTextEntry={!showPassword}
               />
+              <TouchableOpacity 
+                style={styles.eyeIcon}
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff size={20} color={COLORS.textLight} />
+                ) : (
+                  <Eye size={20} color={COLORS.textLight} />
+                )}
+              </TouchableOpacity>
             </View>
             {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
           </View>
@@ -145,8 +157,18 @@ const RegisterScreen = ({ navigation }) => {
                 placeholder="Confirm your password"
                 value={formData.confirmPassword}
                 onChangeText={(value) => handleInputChange('confirmPassword', value)}
-                secureTextEntry
+                secureTextEntry={!showConfirmPassword}
               />
+              <TouchableOpacity 
+                style={styles.eyeIcon}
+                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <EyeOff size={20} color={COLORS.textLight} />
+                ) : (
+                  <Eye size={20} color={COLORS.textLight} />
+                )}
+              </TouchableOpacity>
             </View>
             {errors.confirmPassword && (
               <Text style={styles.errorText}>{errors.confirmPassword}</Text>
@@ -236,6 +258,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: SIZES.sm,
+  },
+  eyeIcon: {
+    padding: SIZES.sm,
   },
   input: {
     flex: 1,

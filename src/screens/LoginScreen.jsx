@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { COLORS, FONTS, SIZES, SHADOWS } from '../constants/theme';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock } from 'lucide-react-native';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
 
 const LoginScreen = ({ navigation }) => {
   const { login, isLoading } = useAuth();
   const [email, setEmail] = useState('jane@example.com');
   const [password, setPassword] = useState('123456');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     setError('');
@@ -45,21 +46,31 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
-            secureTextEntry
+            secureTextEntry={!showPassword}
           />
+          <TouchableOpacity 
+            style={styles.eyeIcon}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <EyeOff size={20} color={COLORS.textLight} />
+            ) : (
+              <Eye size={20} color={COLORS.textLight} />
+            )}
+          </TouchableOpacity>
         </View>
         <TouchableOpacity 
-  style={[styles.button, { 
-    backgroundColor: COLORS.primary,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }]} 
-  onPress={handleLogin}
->
-  <Mail size={20} color="#FFF" style={{ marginRight: 8 }} />
-  <Text style={styles.buttonText}>Sign In</Text>
-</TouchableOpacity>
+          style={[styles.button, { 
+            backgroundColor: COLORS.primary,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }]} 
+          onPress={handleLogin}
+        >
+          <Mail size={20} color="#FFF" style={{ marginRight: 8 }} />
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('register')}>
           <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
         </TouchableOpacity>
@@ -84,6 +95,9 @@ const styles = StyleSheet.create({
   },
   inputIcon: { marginHorizontal: SIZES.sm },
   input: { flex: 1, height: 50, fontFamily: FONTS.regular, color: COLORS.text },
+  eyeIcon: {
+    padding: SIZES.sm,
+  },
   button: {
     backgroundColor: COLORS.primary,
     borderRadius: SIZES.sm,
