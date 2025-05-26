@@ -26,7 +26,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.formContainer}>
-        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.title}>Welcome Back to GetRide</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <View style={styles.inputContainer}>
           <Mail size={20} color={COLORS.textLight} style={styles.inputIcon} />
